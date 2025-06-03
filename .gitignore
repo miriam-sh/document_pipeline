@@ -1,0 +1,38 @@
+# כלליים
+.DS_Store
+*.log
+.env
+.env.*
+
+# תיקיית node (api)
+api/node_modules/
+api/dist/
+api/build/
+api/.env
+
+# תיקיית ריאקט (frontend)
+frontend/node_modules/
+frontend/build/
+frontend/.env
+
+# תיקיית פייתון (worker)
+worker/__pycache__/
+worker/*.pyc
+worker/*.pyo
+worker/*.pyd
+worker/.env
+
+# Docker
+*.pid
+*.sock
+docker-compose.override.yml
+
+# VSCode או IDE
+.vscode/
+.idea/
+
+# קבצים זמניים
+*.swp
+*.swo
+*.bak
+*.tmp
