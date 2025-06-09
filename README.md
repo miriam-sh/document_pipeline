@@ -33,6 +33,4 @@ To run the project locally:
 
 ---
 
-## notes
-
-Make sure Docker and Docker Compose are installed on your machine.
+> Note: Make sure Docker and Docker Compose are installed on your machine.
