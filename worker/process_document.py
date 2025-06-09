@@ -69,10 +69,10 @@ def process_document(document_id, filename):
         extracted = decode_and_extract(path)
         save_extracted_data(document_id, extracted)
         update_status(document_id, "completed")
-        print(f"✅ מסמך {document_id} הושלם")
+        print(f"מסמך {document_id} הושלם")
     except Exception as e:
         update_status(document_id, "failed")
-        print(f"❌ שגיאה בעיבוד מסמך {document_id}: {e}")
+        print(f"שגיאה בעיבוד מסמך {document_id}: {e}")
 
 
 if __name__ == "__main__":
@@ -83,3 +83,4 @@ if __name__ == "__main__":
     doc_id = int(sys.argv[1])
     filename = sys.argv[2]
     process_document(doc_id, filename)
+    

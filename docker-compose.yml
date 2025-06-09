@@ -6,12 +6,12 @@ services:
     restart: always
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_PASSWORD: doc_pipe
       POSTGRES_DB: document_pipeline
     ports:
       - "5432:5432"
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
 
   api:
@@ -22,21 +22,26 @@ services:
       - db
     environment:
       PGUSER: postgres
-      PGPASSWORD: mysecretpassword
+      PGPASSWORD: doc_pipe
       PGHOST: db
       PGDATABASE: document_pipeline
       PGPORT: 5432
+    volumes:
+    - uploads:/uploads
 
   worker:
     build: ./worker
     depends_on:
       - db
+    restart: unless-stopped
     environment:
       PGUSER: postgres
-      PGPASSWORD: mysecretpassword
+      PGPASSWORD: doc_pipe
       PGHOST: db
       PGDATABASE: document_pipeline
       PGPORT: 5432
+    volumes:
+    - uploads:/uploads
 
   frontend:
     build: ./frontend
@@ -46,4 +51,6 @@ services:
       - api
 
 volumes:
-  db_data:
+  pgdata:
+  uploads:
+

@@ -1,5 +1,4 @@
 const cors = require("cors")
-
 const express = require("express");
 const multer = require("multer");
 const path = require("path");
@@ -12,7 +11,7 @@ const PORT = process.env.PORT || 3000;
 const pool = new Pool({
     host: "db",
     user: "postgres",
-    password: "n,fb,,gk", // ← החליפי בסיסמה שלך
+    password: "doc_pipe",
     database: "document_pipeline",
     port: 5432,
 });

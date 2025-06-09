@@ -1,5 +1,7 @@
 import time
 import subprocess
+
+import psycopg2
 from db_config import get_connection
 
 def get_next_document():
@@ -24,17 +26,34 @@ def mark_as_processing(doc_id):
     cursor.close()
     conn.close()
 
+def wait_for_db():
+    while True:
+        try:
+            conn = psycopg2.connect(
+                host="db",
+                dbname="document_pipeline",
+                user="postgres",
+                password="doc_pipe"
+            )
+            conn.close()
+            print("Database is ready!")
+            break
+        except psycopg2.OperationalError:
+            print("Waiting for database...")
+            time.sleep(2)
+
 def main_loop():
-    print("🎯 Watcher התחיל לפעול...")
+    wait_for_db()
+    print("Watcher התחיל לפעול...")
     while True:
         doc = get_next_document()
         if doc:
             doc_id, filename = doc
-            print(f"📥 נמצא קובץ חדש לעיבוד: {filename} (ID={doc_id})")
+            print(f"נמצא קובץ חדש לעיבוד: {filename} (ID={doc_id})")
             mark_as_processing(doc_id)
             subprocess.run(["python", "process_document.py", str(doc_id), filename])
         else:
-            print("⏳ אין קבצים חדשים. ממתין 5 שניות...")
+            print("אין קבצים חדשים. ממתין 5 שניות...")
             time.sleep(5)
 
 if __name__ == "__main__":
