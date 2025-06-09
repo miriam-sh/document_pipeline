@@ -31,6 +31,8 @@ To run the project locally:
 
 3. Open your browser and go to: http://localhost:5173
 
+---
+
 ## notes
 
 Make sure Docker and Docker Compose are installed on your machine.
